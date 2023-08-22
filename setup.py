@@ -25,7 +25,8 @@ setup(
     platforms='any',
     python_requires='>=3.7',
     install_requires=[
-        'Flask>=2.0'
+        'Flask>=2.0',
+        'Pillow'
     ],
     classifiers=[
         'Environment :: Web Environment',
