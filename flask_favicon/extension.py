@@ -18,7 +18,7 @@ import json
 EXT_NAME = "Flask-Favicon"
 FORCE = True
 
-BACKGROUND_COLOR = 'ffffff'  # TODO: ###
+BACKGROUND_COLOR = '#ffffff'
 THEME_COLOR = '#000000'
 
 

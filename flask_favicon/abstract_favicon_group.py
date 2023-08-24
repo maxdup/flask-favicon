@@ -3,7 +3,7 @@ from PIL import Image
 
 
 def _hex_color_to_tuple(hex_string):
-    return tuple(int(hex_string[i:i+2], 16) for i in (0, 2, 4))
+    return tuple(int(hex_string.strip('#')[i:i+2], 16) for i in (0, 2, 4))
 
 
 class AbstractFaviconGroup(object):
@@ -23,8 +23,8 @@ class AbstractFaviconGroup(object):
                                 image_format='png')
 
     def generate_image(self, favicon, size=(16, 16), image_format='png',
-                       use_background=False, factor=0.9):
-        filename = self.filenameSchema.format(*size)
+                       use_background=False, factor=0.9, filename=None):
+        filename = filename or self.filenameSchema.format(*size)
         out_path = os.path.join(self.outdir, filename)
 
         in_ratio = favicon.width/favicon.height

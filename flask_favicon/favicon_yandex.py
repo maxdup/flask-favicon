@@ -13,4 +13,17 @@ class FaviconGroupYandex(AbstractFaviconGroup):
         self.filenameSchema = 'yandex-browser-{}x{}.png'
 
     def generate_extras(self):
-        pass  # TODO yandex-browser-manifest
+        manifest = {
+            'version': '0.1.0',
+            'api_version': 1,
+            'layout': {
+                'logo': self.filenameSchema.format(50, 50),
+                'color': self.conf.get('background_color'),
+                'show_title': True
+            }
+        }
+
+        manifest_path = os.path.join(
+            self.outdir, 'yandex-browser-manifest.json')
+        with open(manifest_path, 'w') as f:
+            f.write(json.dumps(manifest, indent=2))

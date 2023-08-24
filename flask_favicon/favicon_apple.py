@@ -14,8 +14,14 @@ class FaviconGroupApple(AbstractFaviconGroup):
         self.filenameSchema = 'apple-touch-icon-{}x{}.png'
 
     def generate_images(self, favicon):
-        # TODO: apple-touch-icon.png
-        # TODO: apple-touch-icon-precomposed.png
+
+        self.generate_image(favicon, size=(180, 180), image_format='png',
+                            use_background=True,
+                            filename='apple-touch-icon.png')
+        self.generate_image(favicon, size=(180, 180), image_format='png',
+                            use_background=True,
+                            filename='apple-touch-icon-precomposed.png')
+
         for target_size in self.sizes:
             self.generate_image(favicon, size=target_size,
                                 image_format='png', use_background=True)
