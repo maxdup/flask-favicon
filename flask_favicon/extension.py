@@ -1,9 +1,11 @@
+import functools
 import logging
 import json
 import os
 import hashlib
+from pathlib import Path
 
-from flask import current_app
+from flask import Blueprint, url_for, g
 
 from flask_favicon.favicon_ms import FaviconGroupMS
 from flask_favicon.favicon_android import FaviconGroupAndroid
@@ -48,17 +50,29 @@ class FlaskFavicon(object):
 
         self.app = app
 
-    def use_default(self, imagePath):
-        self.compile_favicon(imagePath)
+        self.static_dir = _make_bp_static_dir()
+        bp_favicon = Blueprint("flask-favicon", __name__,
+                               template_folder='./templates',
+                               static_url_path='/favicon',
+                               static_folder=self.static_dir)
 
-    def compile_favicon(self, imagePath):
-        if not os.path.exists(os.path.abspath(imagePath)):
-            raise FileNotFoundError("{} could not be found".format(imagePath))
+        self.app.register_blueprint(bp_favicon)
 
-        outdir = make_compile_dir()
+        self.app.add_template_global(
+            self.favicon_url_for, name="favicon_url_for")
 
-        favicon_checksum = sha256sum(imagePath)
-        compiled_checksum = compiledsum(outdir)
+        @app.before_request
+        def flask_favicon_default():
+            g.flask_favicon_active = 'default'
+
+    def register_favicon(self, image_path, fav_name='default'):
+        if not os.path.exists(os.path.abspath(image_path)):
+            raise FileNotFoundError("{} could not be found".format(image_path))
+
+        favicon_dir = _make_favicon_dir(self.static_dir, fav_name)
+
+        favicon_checksum = _sha256sum(image_path)
+        compiled_checksum = _compiledsum(favicon_dir)
 
         if favicon_checksum == compiled_checksum or not FORCE:
             return
@@ -69,56 +83,50 @@ class FlaskFavicon(object):
             'theme_color': THEME_COLOR
         }
 
-        favicon = Image.open(imagePath)
-        favicon_squared = transform_image_square(favicon)
+        favicon = Image.open(image_path)
 
-        FaviconGroupStandard(conf, outdir).generate(favicon_squared)
-        FaviconGroupAndroid(conf, outdir).generate(favicon_squared)
-        FaviconGroupMS(conf, outdir).generate(favicon_squared)
-        FaviconGroupApple(conf, outdir).generate(favicon_squared)
-        FaviconGroupAppleStartup(conf, outdir).generate(favicon)
-        FaviconGroupYandex(conf, outdir).generate(favicon_squared)
+        favicon_groups = [FaviconGroupStandard, FaviconGroupAndroid,
+                          FaviconGroupMS, FaviconGroupApple,
+                          FaviconGroupAppleStartup, FaviconGroupYandex]
 
-        self.compile_favicon_checksum(favicon_checksum, outdir)
+        for group in favicon_groups:
+            group(conf, favicon_dir).generate(favicon)
 
-    def compile_favicon_checksum(self, checksum, outdir):
-        checksum_path = os.path.join(outdir, 'checksum')
+        self.compile_favicon_checksum(favicon_checksum, favicon_dir)
+
+    def favicon_url_for(self, filename=None):
+        filename = filename or 'favicon.ico'
+        filename = os.path.join(g.flask_favicon_active, filename)
+        return url_for('flask-favicon.static', filename=filename)
+
+    def compile_favicon_checksum(self, checksum, favicon_dir):
+        checksum_path = os.path.join(favicon_dir, 'checksum')
         with open(checksum_path, 'w') as f:
             f.write(checksum)
 
 
-def transform_image_square(image):
-    width, height = image.size
-    smaller_side = min(width, height)
-
-    # Calculate padding values
-    left = (width - smaller_side) // 2
-    upper = (height - smaller_side) // 2
-    right = width - (width - smaller_side - left)
-    lower = height - (height - smaller_side - upper)
-
-    padded_image = image.crop((left, upper, right, lower))
-    return padded_image
+def _make_bp_static_dir():
+    bp_static_dir = os.path.abspath('assets/favicon/')
+    Path(bp_static_dir).mkdir(parents=True, exist_ok=True)
+    return bp_static_dir
 
 
-def make_compile_dir():
-    cdir = os.path.abspath('assets/favicon/')
-    if not os.path.exists(cdir):
-        os.mkdir(os.path.abspath('assets'))
-        os.mkdir(os.path.abspath('assets/favicon'))
-    return cdir
+def _make_favicon_dir(static_dir, fav_name):
+    favicon_dir = os.path.join(static_dir, fav_name)
+    Path(favicon_dir).mkdir(parents=True, exist_ok=True)
+    return favicon_dir
 
 
-def compiledsum(outdir):
+def _compiledsum(favicon_dir):
     try:
-        with open(os.path.join(outdir, 'checksum.txt'), 'r') as f:
+        with open(os.path.join(favicon_dir, 'checksum.txt'), 'r') as f:
             compiled_checksum = f.read(64)
             return compiled_checksum
     except:
         return None
 
 
-def sha256sum(filename):
+def _sha256sum(filename):
     h = hashlib.sha256()
     b = bytearray(128*1024)
     mv = memoryview(b)
