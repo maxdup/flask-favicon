@@ -12,5 +12,6 @@ class FaviconGroupStandard(AbstractFaviconGroup):
         self.filenameSchema = 'favicon-{}x{}.png'
 
     def generate_images(self, favicon):
-        self.generate_image(favicon, image_format='ICO')
+        self.generate_image(favicon, image_format='ICO',
+                            filename='favicon.ico')
         super().generate_images(favicon)

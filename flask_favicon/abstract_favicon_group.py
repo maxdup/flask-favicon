@@ -23,7 +23,7 @@ class AbstractFaviconGroup(object):
                                 image_format='png')
 
     def generate_image(self, favicon, size=(16, 16), image_format='png',
-                       use_background=False, factor=0.9, filename=None):
+                       use_background=False, factor=1, filename=None):
         filename = filename or self.filenameSchema.format(*size)
         out_path = os.path.join(self.outdir, filename)
 
@@ -35,6 +35,7 @@ class AbstractFaviconGroup(object):
            not use_background:
             # fast implementation for 1:1 aspect ratios
             favicon_resized = favicon.resize(size)
+            favicon_resized = favicon_resized.convert('RGBA')
         else:
             # slower implementation for N:N aspect ratios
             if in_ratio < out_ratio:
