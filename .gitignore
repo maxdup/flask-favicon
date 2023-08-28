@@ -108,12 +108,6 @@ venv.bak/
 *#
 
 #temporarily
-tests/
-pytest.ini
-tox.ini
-.coveragerc
-conftest.py
-
 docs/
 .github/
 
