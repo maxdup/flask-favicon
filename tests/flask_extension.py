@@ -116,7 +116,7 @@ def test__flask_favicon_before_request(mock_generate, mock_mkdir, appFactory):
             assert '_flask_favicon' not in g
             app.preprocess_request()
             assert '_flask_favicon' in g
-            assert g._flask_favicon.iconRegistry == flaskFavicon._registry
+            assert g._flask_favicon.icon_registry == flaskFavicon._registry
 
             mock_warn.assert_called_once_with(
                 'Warning: The "default" favicon was not registered during '
@@ -129,8 +129,8 @@ def test__flask_favicon_before_request(mock_generate, mock_mkdir, appFactory):
     with app.test_request_context('/') as ctx:
         app.preprocess_request()
         assert '_flask_favicon' in g
-        assert g._flask_favicon.iconRegistry == flaskFavicon._registry
-        assert g._flask_favicon.activeIcon == flaskFavicon._registry['default']
+        assert g._flask_favicon.icon_registry == flaskFavicon._registry
+        assert g._flask_favicon.active_icon == flaskFavicon._registry['default']
 
 
 @mock.patch('pathlib.Path.mkdir')

@@ -78,13 +78,13 @@ class FlaskFavicon(object):
 
     def _flask_favicon_before_request(self):
         g._flask_favicon = SimpleNamespace()
-        g._flask_favicon.iconRegistry = self._registry
-        if 'default' not in g._flask_favicon.iconRegistry.keys():
+        g._flask_favicon.icon_registry = self._registry
+        if 'default' not in g._flask_favicon.icon_registry.keys():
             warnings.warn(
                 'Warning: The "{}" favicon was not registered during '
                 'flask-favicon initialization.'.format('default'))
         else:
-            g._flask_favicon.activeIcon = self._registry['default']
+            g._flask_favicon.active_icon = self._registry['default']
 
 
 def _make_bp_static_dir(build_dir):

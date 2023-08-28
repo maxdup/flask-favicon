@@ -7,12 +7,12 @@ from flask import g, url_for
 def use_favicon(favicon_name):
     def decorator(fn):
         def wrapper(*args, **kwargs):
-            if favicon_name not in g._flask_favicon.iconRegistry.keys():
+            if favicon_name not in g._flask_favicon.icon_registry.keys():
                 warnings.warn(
                     'Warning: The "{}" favicon was not registered during '
                     'flask-favicon initialization.'.format(favicon_name))
             else:
-                g._flask_favicon.activeIcon = g._flask_favicon.iconRegistry[favicon_name]
+                g._flask_favicon.active_icon = g._flask_favicon.icon_registry[favicon_name]
 
             return fn(*args, **kwargs)
         return wrapper
@@ -21,5 +21,6 @@ def use_favicon(favicon_name):
 
 def favicon_url_for(filename=None):
     filename = filename or 'favicon.ico'
-    filename = os.path.join(g._flask_favicon.activeIcon.favicon_name, filename)
+    filename = os.path.join(
+        g._flask_favicon.active_icon.favicon_name, filename)
     return url_for('flask-favicon.static', filename=filename)
