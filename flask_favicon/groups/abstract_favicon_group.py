@@ -1,9 +1,4 @@
 import os
-from PIL import Image
-
-
-def _hex_color_to_tuple(hex_string):
-    return tuple(int(hex_string.strip('#')[i:i+2], 16) for i in (0, 2, 4))
 
 
 class AbstractFaviconGroup(object):
@@ -19,11 +14,11 @@ class AbstractFaviconGroup(object):
 
     def generate_images(self, favicon):
         for target_size in self.sizes:
-            self.generate_image(favicon, size=target_size,
-                                image_format='png')
+            self.generate_image(favicon, size=target_size)
 
     def generate_image(self, favicon, size=(16, 16), image_format='png',
                        use_background=False, factor=1, filename=None):
+
         filename = filename or self.filenameSchema.format(*size)
         out_path = os.path.join(self.outdir, filename)
 
@@ -38,6 +33,9 @@ class AbstractFaviconGroup(object):
             favicon_resized = favicon_resized.convert('RGBA')
         else:
             # slower implementation for N:N aspect ratios
+
+            from PIL import Image
+
             if in_ratio < out_ratio:
                 # use height, scale width
                 scaled_size = (round(size[0] * factor / out_ratio),
@@ -67,3 +65,7 @@ class AbstractFaviconGroup(object):
 
     def generate_extras(self):
         pass
+
+
+def _hex_color_to_tuple(hex_string):
+    return tuple(int(hex_string.strip('#')[i:i+2], 16) for i in (0, 2, 4))

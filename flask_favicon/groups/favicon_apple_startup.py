@@ -20,4 +20,4 @@ class FaviconGroupAppleStartup(AbstractFaviconGroup):
     def generate_images(self, favicon):
         for target_size in self.sizes:
             self.generate_image(favicon, size=target_size, factor=0.33,
-                                image_format='png', use_background=True)
+                                use_background=True)

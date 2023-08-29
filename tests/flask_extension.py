@@ -80,7 +80,7 @@ def test_register_favicon(mock_generate, mock_mkdir, appFactory):
     assert result_fav
     assert result_fav.favicon_name == 'default'
     assert result_fav.favicon_source == 'tests/data/favicon1.png'
-    assert result_fav.configuration == flaskFavicon.configuration
+    assert result_fav.base_configuration == flaskFavicon.configuration
     assert result_fav.theme_color == flaskFavicon.configuration['theme_color']
     assert result_fav.background_color == flaskFavicon.configuration['background_color']
     mock_generate.assert_called_once()
@@ -94,7 +94,7 @@ def test_register_favicon(mock_generate, mock_mkdir, appFactory):
     assert result_fav
     assert result_fav.favicon_name == 'default-alt'
     assert result_fav.favicon_source == 'tests/data/favicon2.png'
-    assert result_fav.configuration == flaskFavicon.configuration
+    assert result_fav.base_configuration == flaskFavicon.configuration
     assert result_fav.theme_color == '#00ff00'
     assert result_fav.background_color == '#ff00ff'
     mock_generate.assert_called_once()

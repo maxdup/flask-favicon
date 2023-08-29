@@ -16,9 +16,9 @@ class FlaskFaviconAsset(object):
 
         self.favicon_name = favicon_name
         self.favicon_source = favicon_source
-        self.favicon_dir = self._make_favicon_dir(
-            favicon_name, configuration['static_dir'])
-        self.configuration = configuration
+        self.favicon_dir = os.path.join(
+            configuration['static_dir'], favicon_name)
+        self.base_configuration = configuration
 
         self.background_color = background_color
         if not self.background_color:
@@ -29,48 +29,52 @@ class FlaskFaviconAsset(object):
             self.theme_color = configuration['theme_color']
 
         # Check if compile required
-        self._source_checksum = self._sha256sum(self.favicon_source)
-        self._built_checksum = self._compiledsum(self.favicon_dir)
+        self._source_checksum = _sha256_sum(self.favicon_source)
+        self._saved_checksum = _saved_sum(self.favicon_dir)
 
-        self.up_to_date = self._source_checksum == self._built_checksum
+        self.up_to_date = self._source_checksum == self._saved_checksum
 
     def generate_assets(self):
+
         from PIL import Image
 
         favicon = Image.open(self.favicon_source)
+
+        Path(self.favicon_dir).mkdir(parents=True, exist_ok=True)
 
         favicon_groups = [FaviconGroupStandard, FaviconGroupAndroid,
                           FaviconGroupMS, FaviconGroupApple,
                           FaviconGroupAppleStartup, FaviconGroupYandex]
 
         for group in favicon_groups:
-            group(self.configuration, self.favicon_dir).generate(favicon)
+            group(self.base_configuration, self.favicon_dir).generate(favicon)
 
-        self.compile_favicon_checksum(self._source_checksum, self.favicon_dir)
+        _save_sum(self._source_checksum, self.favicon_dir)
 
-    def compile_favicon_checksum(self, checksum, favicon_dir):
-        checksum_path = os.path.join(self.favicon_dir, 'checksum')
-        with open(checksum_path, 'w') as f:
-            f.write(checksum)
 
-    def _make_favicon_dir(self, favicon_name, static_dir):
-        favicon_dir = os.path.join(static_dir, favicon_name)
-        Path(favicon_dir).mkdir(parents=True, exist_ok=True)
-        return favicon_dir
+CHECKSUM_FILENAME = 'checksum.txt'
 
-    def _compiledsum(self, favicon_dir):
-        try:
-            with open(os.path.join(favicon_dir, 'checksum.txt'), 'r') as f:
-                compiled_checksum = f.read(64)
-                return compiled_checksum
-        except:
-            return None
 
-    def _sha256sum(self, filename):
-        h = hashlib.sha256()
-        b = bytearray(128*1024)
-        mv = memoryview(b)
-        with open(filename, 'rb', buffering=0) as f:
-            for n in iter(lambda: f.readinto(mv), 0):
-                h.update(mv[:n])
-        return h.hexdigest()
+def _save_sum(checksum, favicon_dir):
+    checksum_path = os.path.join(favicon_dir, CHECKSUM_FILENAME)
+    with open(checksum_path, 'w') as f:
+        f.write(checksum)
+
+
+def _saved_sum(favicon_dir):
+    try:
+        with open(os.path.join(favicon_dir, CHECKSUM_FILENAME), 'r') as f:
+            compiled_checksum = f.read(64)
+            return compiled_checksum
+    except:
+        return None
+
+
+def _sha256_sum(filename):
+    h = hashlib.sha256()
+    b = bytearray(128*1024)
+    mv = memoryview(b)
+    with open(filename, 'rb', buffering=0) as f:
+        for n in iter(lambda: f.readinto(mv), 0):
+            h.update(mv[:n])
+    return h.hexdigest()
