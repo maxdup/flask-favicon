@@ -14,7 +14,7 @@ class FaviconGroupMS(AbstractFaviconGroup):
     def __init__(self, conf, outdir):
         super().__init__(conf, outdir)
         self.sizes = MSTILE_TARGET_SIZES
-        self.filenameSchema = 'mstile-{}x{}.png'
+        self.filename_schema = 'mstile-{}x{}.png'
 
     def generate_extras(self):
 

@@ -11,7 +11,9 @@ def test_init():
     assert group.conf == CONFIG
     assert group.outdir == OUTDIR
     assert group.sizes == BROWSER_TARGET_SIZES
-    assert group.filenameSchema == 'favicon-{}x{}.png'
+    assert group.filename_schema == 'favicon-{}x{}.png'
+    assert group.use_background == False
+    assert group.scale_factor == 1.0
 
 
 @mock.patch('flask_favicon.groups.abstract_favicon_group.AbstractFaviconGroup.generate_image')

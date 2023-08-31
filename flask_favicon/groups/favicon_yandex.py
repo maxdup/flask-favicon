@@ -10,14 +10,14 @@ class FaviconGroupYandex(AbstractFaviconGroup):
     def __init__(self, conf, outdir):
         super().__init__(conf, outdir)
         self.sizes = YANDEX_TARGET_SIZES
-        self.filenameSchema = 'yandex-browser-{}x{}.png'
+        self.filename_schema = 'yandex-browser-{}x{}.png'
 
     def generate_extras(self):
         manifest = {
             'version': '0.1.0',
             'api_version': 1,
             'layout': {
-                'logo': self.filenameSchema.format(50, 50),
+                'logo': self.filename_schema.format(50, 50),
                 'color': self.conf.get('background_color'),
                 'show_title': True
             }

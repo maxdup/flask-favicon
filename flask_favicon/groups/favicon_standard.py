@@ -9,7 +9,7 @@ class FaviconGroupStandard(AbstractFaviconGroup):
     def __init__(self, conf, outdir):
         super().__init__(conf, outdir)
         self.sizes = BROWSER_TARGET_SIZES
-        self.filenameSchema = 'favicon-{}x{}.png'
+        self.filename_schema = 'favicon-{}x{}.png'
 
     def generate_images(self, favicon):
         self.generate_image(favicon, image_format='ICO',

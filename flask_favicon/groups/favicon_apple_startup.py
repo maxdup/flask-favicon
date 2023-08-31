@@ -15,9 +15,10 @@ class FaviconGroupAppleStartup(AbstractFaviconGroup):
     def __init__(self, conf, outdir):
         super().__init__(conf, outdir)
         self.sizes = APPLE_STARTUP_SIZES
-        self.filenameSchema = 'apple-touch-startup-image-{}x{}.png'
+        self.filename_schema = 'apple-touch-startup-image-{}x{}.png'
+        self.scale_factor = 0.33
+        self.use_background = True
 
     def generate_images(self, favicon):
         for target_size in self.sizes:
-            self.generate_image(favicon, size=target_size, factor=0.33,
-                                use_background=True)
+            self.generate_image(favicon, size=target_size)

@@ -11,14 +11,15 @@ class FaviconGroupApple(AbstractFaviconGroup):
     def __init__(self, conf, outdir):
         super().__init__(conf, outdir)
         self.sizes = APPLE_TARGET_SIZES
-        self.filenameSchema = 'apple-touch-icon-{}x{}.png'
+        self.filename_schema = 'apple-touch-icon-{}x{}.png'
+        self.use_background = True
 
     def generate_images(self, favicon):
 
-        self.generate_image(favicon, size=(180, 180), use_background=True,
+        self.generate_image(favicon, size=(180, 180),
                             filename='apple-touch-icon.png')
-        self.generate_image(favicon, size=(180, 180), use_background=True,
+        self.generate_image(favicon, size=(180, 180),
                             filename='apple-touch-icon-precomposed.png')
 
         for target_size in self.sizes:
-            self.generate_image(favicon, size=target_size, use_background=True)
+            self.generate_image(favicon, size=target_size)

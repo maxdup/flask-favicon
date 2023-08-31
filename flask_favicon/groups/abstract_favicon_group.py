@@ -6,7 +6,9 @@ class AbstractFaviconGroup(object):
         self.conf = conf
         self.outdir = outdir
         self.sizes = []
-        self.filenameSchema = '{}x{}.png'
+        self.filename_schema = '{}x{}.png'
+        self.scale_factor = 1.0
+        self.use_background = False
 
     def generate(self, favicon):
         self.generate_images(favicon)
@@ -16,52 +18,59 @@ class AbstractFaviconGroup(object):
         for target_size in self.sizes:
             self.generate_image(favicon, size=target_size)
 
-    def generate_image(self, favicon, size=(16, 16), image_format='png',
-                       use_background=False, factor=1, filename=None):
+    def generate_image(self, favicon, size=(16, 16),
+                       image_format='png', filename=None):
 
-        filename = filename or self.filenameSchema.format(*size)
+        filename = filename or self.filename_schema.format(*size)
         out_path = os.path.join(self.outdir, filename)
 
         in_ratio = favicon.width/favicon.height
         out_ratio = size[0]/size[1]
 
-        if in_ratio == out_ratio and \
-           factor == 1 and \
-           not use_background:
-            # fast implementation for 1:1 aspect ratios
-            favicon_resized = favicon.resize(size)
-            favicon_resized = favicon_resized.convert('RGBA')
+        favicon = favicon.convert('RGBA')
+
+        if abs(in_ratio - out_ratio) < 0.05 and \
+           self.scale_factor == 1 and not self.use_background:
+            # fast implementation for 1:1 aspect ratios without modifications
+            generated_favicon = self._generate_image_simple(
+                favicon, size)
         else:
             # slower implementation for N:N aspect ratios
+            generated_favicon = self._generate_image_complex(
+                favicon, size, in_ratio, out_ratio)
 
-            from PIL import Image
+        generated_favicon.save(out_path, image_format)
 
-            if in_ratio < out_ratio:
-                # use height, scale width
-                scaled_size = (round(size[0] * factor / out_ratio),
-                               round(size[1] * factor))
-            else:
-                # use width, scale height
-                scaled_size = (round(size[0] * factor),
-                               round(size[1] * factor * out_ratio))
+    def _generate_image_simple(self, favicon, size):
+        return favicon.resize(size)
 
-            favicon = favicon.resize(scaled_size).convert('RGBA')
+    def _generate_image_complex(self, favicon, size, in_ratio, out_ratio):
+        from PIL import Image
 
-            x_offset = (size[0] - favicon.width) // 2
-            y_offset = (size[1] - favicon.height) // 2
+        scaled_size_x = size[0] * self.scale_factor
+        scaled_size_y = size[1] * self.scale_factor
 
-            mode = 'RGBA'
-            bg_color = (255, 255, 255, 0)
-            mask = None
+        if in_ratio < out_ratio:
+            # use height, scale width
+            scaled_size_x /= out_ratio
+        elif in_ratio > out_ratio:
+            # use width, scale height
+            scaled_size_y *= out_ratio
 
-            if use_background:
-                mode = 'RGBA'
-                bg_color = _hex_color_to_tuple(self.conf['background_color'])
+        scaled_size = (round(scaled_size_x), round(scaled_size_y))
 
-            favicon_resized = Image.new(mode, size, bg_color)
-            favicon_resized.paste(favicon, (x_offset, y_offset), favicon)
+        scaled_favicon = favicon.resize(scaled_size)
 
-        favicon_resized.save(out_path, image_format)
+        offset = ((size[0] - scaled_size[0]) // 2,
+                  (size[1] - scaled_size[1]) // 2)
+
+        bg_color = (255, 255, 255, 0)
+        if self.use_background:
+            bg_color = _hex_color_to_tuple(self.conf['background_color'])
+
+        out_favicon = Image.new('RGBA', size, bg_color)
+        out_favicon.paste(scaled_favicon, offset, scaled_favicon)
+        return out_favicon
 
     def generate_extras(self):
         pass

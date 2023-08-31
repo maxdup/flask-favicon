@@ -11,7 +11,7 @@ class FaviconGroupAndroid(AbstractFaviconGroup):
     def __init__(self, conf, outdir):
         super().__init__(conf, outdir)
         self.sizes = ANDROID_TARGET_SIZES
-        self.filenameSchema = 'android-chrome-{}x{}.png'
+        self.filename_schema = 'android-chrome-{}x{}.png'
 
     def generate_extras(self):
         manifest = {
@@ -29,7 +29,7 @@ class FaviconGroupAndroid(AbstractFaviconGroup):
         }
 
         for target_size in self.sizes:
-            filename = self.filenameSchema.format(*target_size)
+            filename = self.filename_schema.format(*target_size)
             manifest['icons'].append({
                 'src': filename,
                 'sizes': '{}x{}'.format(*target_size),
@@ -39,4 +39,5 @@ class FaviconGroupAndroid(AbstractFaviconGroup):
 
         manifest_path = os.path.join(self.outdir, 'manifest.webmanifest')
         with open(manifest_path, 'w') as f:
+            print(type(f))
             f.write(json.dumps(manifest, indent=2))
