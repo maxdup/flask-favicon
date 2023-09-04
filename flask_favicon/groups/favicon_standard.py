@@ -1,5 +1,3 @@
-import os
-
 from .abstract_favicon_group import AbstractFaviconGroup
 
 BROWSER_TARGET_SIZES = [(16, 16), (32, 32), (48, 48)]

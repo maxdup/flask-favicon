@@ -1,5 +1,3 @@
-import os
-
 from .abstract_favicon_group import AbstractFaviconGroup
 
 APPLE_TARGET_SIZES = [(57, 57), (60, 60), (72, 72), (76, 76), (114, 114),

@@ -1,5 +1,3 @@
-import os
-
 from .abstract_favicon_group import AbstractFaviconGroup
 
 APPLE_STARTUP_SIZES = [(640, 1136), (750, 1334), (828, 1792), (1125, 2436),

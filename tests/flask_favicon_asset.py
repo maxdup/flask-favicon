@@ -23,9 +23,9 @@ def test_init(mock_mkdir, mock_saved_sum, mock_sha_sum):
         'default', 'tests/data/favicon1.png', configuration)
 
     assert asset.favicon_name == 'default'
-    assert asset.favicon_source == 'tests/data/favicon1.png'
+    assert asset.favicon_source == os.path.normpath('tests/data/favicon1.png')
 
-    assert asset.favicon_dir == 'assets/favicon/default'
+    assert asset.favicon_dir == os.path.normpath('assets/favicon/default')
     assert asset.base_configuration == configuration
 
     assert asset.background_color == '#000000'
@@ -43,9 +43,9 @@ def test_init(mock_mkdir, mock_saved_sum, mock_sha_sum):
         background_color='#ff0000', theme_color="#00ffff")
 
     assert asset.favicon_name == 'custom-name'
-    assert asset.favicon_source == 'tests/data/favicon2.png'
+    assert asset.favicon_source == os.path.normpath('tests/data/favicon2.png')
 
-    assert asset.favicon_dir == 'assets/favicon/custom-name'
+    assert asset.favicon_dir == os.path.normpath('assets/favicon/custom-name')
     assert asset.base_configuration == configuration
 
     assert asset.background_color == '#ff0000'

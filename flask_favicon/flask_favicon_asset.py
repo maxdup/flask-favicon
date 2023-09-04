@@ -15,9 +15,9 @@ class FlaskFaviconAsset(object):
                  background_color=None, theme_color=None):
 
         self.favicon_name = favicon_name
-        self.favicon_source = favicon_source
-        self.favicon_dir = os.path.join(
-            configuration['static_dir'], favicon_name)
+        self.favicon_source = os.path.normpath(favicon_source)
+        self.favicon_dir = os.path.normpath(os.path.join(
+            configuration['static_dir'], favicon_name))
         self.base_configuration = configuration
 
         self.background_color = background_color
@@ -56,14 +56,14 @@ CHECKSUM_FILENAME = 'checksum.txt'
 
 
 def _save_sum(checksum, favicon_dir):
-    checksum_path = os.path.join(favicon_dir, CHECKSUM_FILENAME)
+    checksum_path = os.path.normpath(os.path.join(favicon_dir, CHECKSUM_FILENAME))
     with open(checksum_path, 'w') as f:
         f.write(checksum)
 
 
 def _saved_sum(favicon_dir):
     try:
-        with open(os.path.join(favicon_dir, CHECKSUM_FILENAME), 'r') as f:
+        with open(os.path.normpath(os.path.join(favicon_dir, CHECKSUM_FILENAME)), 'r') as f:
             compiled_checksum = f.read(64)
             return compiled_checksum
     except:

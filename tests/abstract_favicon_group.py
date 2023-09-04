@@ -1,3 +1,4 @@
+import os
 from unittest import mock
 from PIL import Image
 
@@ -74,7 +75,7 @@ def test_generate_image(mock_save, mock_convert, mock_gen_complex, mock_gen_simp
     mock_convert.assert_called_once_with('RGBA')
     mock_gen_simple.assert_called_with(favicon, (16, 16))
     mock_gen_complex.assert_not_called()
-    mock_save.assert_called_once_with('asset/favicon/16x16.png', 'png')
+    mock_save.assert_called_once_with(os.path.normpath('asset/favicon/16x16.png'), 'png')
 
     reset_mock()
 
@@ -82,7 +83,7 @@ def test_generate_image(mock_save, mock_convert, mock_gen_complex, mock_gen_simp
     mock_convert.assert_called_once_with('RGBA')
     mock_gen_simple.assert_not_called()
     mock_gen_complex.assert_called_once_with(favicon, (64, 32), 1.0, 2.0)
-    mock_save.assert_called_once_with('asset/favicon/64x32.png', 'png')
+    mock_save.assert_called_once_with(os.path.normpath('asset/favicon/64x32.png'), 'png')
 
     reset_mock()
 
@@ -91,7 +92,7 @@ def test_generate_image(mock_save, mock_convert, mock_gen_complex, mock_gen_simp
     mock_convert.assert_called_once_with('RGBA')
     mock_gen_simple.assert_not_called()
     mock_gen_complex.assert_called_once_with(favicon, (32, 32), 1.0, 1.0)
-    mock_save.assert_called_once_with('asset/favicon/32x32.png', 'png')
+    mock_save.assert_called_once_with(os.path.normpath('asset/favicon/32x32.png'), 'png')
     reset_mock()
 
     group.use_background = True
@@ -99,7 +100,7 @@ def test_generate_image(mock_save, mock_convert, mock_gen_complex, mock_gen_simp
     mock_convert.assert_called_once_with('RGBA')
     mock_gen_simple.assert_not_called()
     mock_gen_complex.assert_called_once_with(favicon, (32, 32), 1.0, 1.0)
-    mock_save.assert_called_once_with('asset/favicon/32x32.png', 'png')
+    mock_save.assert_called_once_with(os.path.normpath('asset/favicon/32x32.png'), 'png')
 
 
 @mock.patch('PIL.PngImagePlugin.PngImageFile.resize')

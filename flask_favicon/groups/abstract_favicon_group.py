@@ -22,7 +22,7 @@ class AbstractFaviconGroup(object):
                        image_format='png', filename=None):
 
         filename = filename or self.filename_schema.format(*size)
-        out_path = os.path.join(self.outdir, filename)
+        out_path = os.path.normpath(os.path.join(self.outdir, filename))
 
         in_ratio = favicon.width/favicon.height
         out_ratio = size[0]/size[1]

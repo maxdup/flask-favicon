@@ -37,7 +37,7 @@ class FaviconGroupAndroid(AbstractFaviconGroup):
                 'purpose': 'any'
             })
 
-        manifest_path = os.path.join(self.outdir, 'manifest.webmanifest')
+        manifest_path = os.path.normpath(os.path.join(self.outdir, 'manifest.webmanifest'))
         with open(manifest_path, 'w') as f:
             print(type(f))
             f.write(json.dumps(manifest, indent=2))
