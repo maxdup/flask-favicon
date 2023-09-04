@@ -24,7 +24,10 @@ Flask-favicon documentation
 .. Covarage
 .. image:: coverage.svg
 
-Flask-favicon is a `Flask <https://flask.palletsprojects.com/en/2.2.x/>`_ extension.
+Flask-favicon is a `Flask <https://flask.palletsprojects.com>`_ extension which generates multiple favicon variants for different platforms. The goal is to cover as many devices as possible from a single image file. Flask-favicon compiles and serves all the assets for you and provides an easy to use Jinga template which you can include in your html :code:`<head>`.
+
+
+Flask-favicon is largely inspired by `favicons-webpack-plugin <https://github.com/jantimon/favicons-webpack-plugin>`_.
 
 
 User Guides

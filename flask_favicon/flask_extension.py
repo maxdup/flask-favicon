@@ -16,6 +16,7 @@ class FlaskFavicon(object):
         :func:`FlaskFavicon.init_app` automatically if the
         app parameter is provided.
 
+        :meta public:
         :param app: A Flask application.
         :type app: flask.Flask
         """
@@ -27,6 +28,7 @@ class FlaskFavicon(object):
         """
         Initializes the extension.
 
+        :meta public:
         :param app: A Flask application.
         :type app: flask.Flask
         """
@@ -58,6 +60,19 @@ class FlaskFavicon(object):
 
     def register_favicon(self, favicon_source_path=None, favicon_name='default',
                          background_color=None, theme_color=None):
+        """
+        Registers an image to be used as a favicon.
+
+        :meta public:
+        :param favicon_source_path: A path to the image asset.
+        :type favicon_source_path: str
+        :param favicon_name: An identifier for the favicon.
+        :type favicon_name: str
+        :param background_color: Hex formatted background color to be used for asset generation. It overrides :any:`FAVICON_DEFAULT_BACKGROUND_COLOR` configuration.
+        :type background_color: str
+        :param theme_color: Hex formatted theme color to be used for asset generation. It overrides :any:`FAVICON_DEFAULT_THEME_COLOR` configuration.
+        :type theme_color: str
+        """
 
         if not os.path.exists(os.path.abspath(favicon_source_path)):
             raise FileNotFoundError(

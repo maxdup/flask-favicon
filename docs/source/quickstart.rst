@@ -8,7 +8,8 @@ Installation
 
 PyPI
 ~~~~
-flask-favicon is available on the Python Package Index. This makes installing it with pip as easy as:
+
+Flask-favicon is available on the Python Package Index. This makes installing it with pip as easy as:
 
 .. code-block:: bash
 
@@ -37,9 +38,9 @@ and install it from the repo directory with:
 Initializing
 ------------
 
-The extension needs to be loaded alongside your Flask application.
+The extension needs to be loaded alongside your Flask application. All favicons need to be declared during app creation with :any:`register_favicon<FlaskFavicon.register_favicon()>`. You may register any amount of favicons. You should have at least one favicon named as :code:`'default'`
 
-Here's how it's done:
+Here's a minimal example of how this is done:
 
 .. code-block:: python
 
@@ -48,29 +49,58 @@ Here's how it's done:
 
     flaskFavicon = FlaskFavicon()
 
-    app = Flask('my-app',
-                static_folder='dist/static',
-                static_url_path='/static')
+    app = Flask('my-app')
 
-    bp = Blueprint('my-blueprint',
-                   __name__,
-                   static_folder='blueprints/static',
-                   static_url_path='/bp/static')
-
+    bp = Blueprint('my-blueprint', __name__)
     app.register_blueprint(bp)
 
     flaskFavicon.init_app(app)
-    flaskFavicon.register_favicon('source/favicon.png', 'default')
+    flaskFavicon.register_favicon('source/favicon.png', 'default') # filename, favicon identifier
+    flaskFavicon.register_favicon('source/favicon-alt.png', 'default-alt')
+    flaskFavicon.register_favicon('source/promo.png', 'promo')
 
     app.run()
 
 Usage
 -----
 
-Flask-favicon adds the :any:`use_favicon` route decorator for use in app.
+Initiallizing :code:`FlaskFavicon` provides you with a Jinga template to be inserted in your :code:`<head>`.
+
+.. code-block:: jinga
+
+    <!-- _head.html -->
+    <head>
+      ...
+      {% include "flask-favicon.html" %}
+      ...
+    </head>
+
+By default, the :code:`flask-favicon.html` template will be populated with the favicon registered as :code:`'default'`.
+
+To use the alternative favicons as declared earlier, you can use Flask-favicon's :any:`use_favicon` decorator alongside route declarations.
 
 .. code-block:: python
 
-   @use_favicon
+   from flask import Blueprint, render_template
+   from flask_favicon import use_favicon
+
+   bp_site = Blueprint('site', __name__)
+
+   @bp_site.route("/")
+   # will use 'default' favicon
    def index():
-       pass
+       return render_template('index.html')
+
+   @bp_site.route("/promo")
+   @use_favicon('promo')
+   def promo():
+       return render_template('promo-page.html')
+
+   @bp_site.route("/special-event")
+   @use_favicon('default-alt')
+   def special_event():
+       return render_template('special-page.html')
+
+.. note::
+
+   :code:`@use_favicon()` comes after the :code:`@bp.route()` decorator.

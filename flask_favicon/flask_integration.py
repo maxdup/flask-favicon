@@ -5,6 +5,12 @@ from flask import g, url_for
 
 
 def use_favicon(favicon_name):
+    '''
+    Function decorator to override the default favicon on a specific route.
+
+    :param favicon_name: The identifier of the favicon to be used.
+    :type favicon_name: str
+    '''
     def decorator(fn):
         def wrapper(*args, **kwargs):
             if favicon_name not in g._flask_favicon.icon_registry.keys():

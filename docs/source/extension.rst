@@ -5,3 +5,5 @@ Extension reference
    :special-members:
    :exclude-members: __weakref__
    :members:
+
+.. autofunction:: flask_favicon.flask_integration.use_favicon
