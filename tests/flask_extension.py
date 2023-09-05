@@ -79,7 +79,7 @@ def test_register_favicon(mock_generate, mock_mkdir, appFactory):
     result_fav = flaskFavicon._registry['default']
     assert result_fav
     assert result_fav.favicon_name == 'default'
-    assert result_fav.favicon_source == 'tests/data/favicon1.png'
+    assert result_fav.favicon_source == os.path.normpath('tests/data/favicon1.png')
     assert result_fav.base_configuration == flaskFavicon.configuration
     assert result_fav.theme_color == flaskFavicon.configuration['theme_color']
     assert result_fav.background_color == flaskFavicon.configuration['background_color']
@@ -93,7 +93,7 @@ def test_register_favicon(mock_generate, mock_mkdir, appFactory):
     result_fav = flaskFavicon._registry['default-alt']
     assert result_fav
     assert result_fav.favicon_name == 'default-alt'
-    assert result_fav.favicon_source == 'tests/data/favicon2.png'
+    assert result_fav.favicon_source == os.path.normpath('tests/data/favicon2.png')
     assert result_fav.base_configuration == flaskFavicon.configuration
     assert result_fav.theme_color == '#00ff00'
     assert result_fav.background_color == '#ff00ff'
@@ -136,5 +136,5 @@ def test__flask_favicon_before_request(mock_generate, mock_mkdir, appFactory):
 @mock.patch('pathlib.Path.mkdir')
 def test__make_bp_static_dir(mock_mkdir):
     ret_value = _make_bp_static_dir('DIR/ECTORY/')
-    assert ret_value == os.path.join(os.getcwd(), 'DIR/ECTORY')
+    assert ret_value == os.path.normpath(os.path.join(os.getcwd(), 'DIR/ECTORY'))
     mock_mkdir.assert_called_with(parents=True, exist_ok=True)

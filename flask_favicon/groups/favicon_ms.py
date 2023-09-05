@@ -18,7 +18,7 @@ class FaviconGroupMS(AbstractFaviconGroup):
 
     def generate_extras(self):
 
-        manifest_path = os.path.join(self.outdir, 'browserconfig.xml')
+        manifest_path = os.path.normpath(os.path.join(self.outdir, 'browserconfig.xml'))
         root = ET.Element('browserconfig')
         msapp = ET.SubElement(root, 'msapplication')
         tile = ET.SubElement(msapp, 'tile')

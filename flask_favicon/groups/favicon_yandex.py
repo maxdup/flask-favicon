@@ -23,7 +23,7 @@ class FaviconGroupYandex(AbstractFaviconGroup):
             }
         }
 
-        manifest_path = os.path.join(
-            self.outdir, 'yandex-browser-manifest.json')
+        manifest_path = os.path.normpath(os.path.join(
+            self.outdir, 'yandex-browser-manifest.json'))
         with open(manifest_path, 'w') as f:
             f.write(json.dumps(manifest, indent=2))

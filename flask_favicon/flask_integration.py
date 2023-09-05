@@ -27,6 +27,6 @@ def use_favicon(favicon_name):
 
 def favicon_url_for(filename=None):
     filename = filename or 'favicon.ico'
-    filename = os.path.join(
-        g._flask_favicon.active_icon.favicon_name, filename)
+    filename = os.path.normpath(os.path.join(
+        g._flask_favicon.active_icon.favicon_name, filename))
     return url_for('flask-favicon.static', filename=filename)

@@ -1,3 +1,4 @@
+import os
 from unittest import mock
 
 from flask import g
@@ -89,7 +90,7 @@ def test_favicon_url_for(mock_generate, mock_mkdir, appFactory):
             mock_url_for.assert_called_with(
                 'flask-favicon.static',
                 _anchor=None, _method=None, _scheme=None, _external=None,
-                filename='default/default16x16.png')
+                filename=os.path.normpath('default/default16x16.png'))
 
     with mock.patch.object(app, 'url_for') as mock_url_for:
         with app.test_request_context('/') as ctx:
@@ -103,4 +104,4 @@ def test_favicon_url_for(mock_generate, mock_mkdir, appFactory):
             mock_url_for.assert_called_with(
                 'flask-favicon.static',
                 _anchor=None, _method=None, _scheme=None, _external=None,
-                filename='custom/custom16x16.png')
+                filename=os.path.normpath('custom/custom16x16.png'))
