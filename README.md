@@ -1,9 +1,9 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/flask-favicon.svg)](https://pypi.python.org/pypi/flask-favicon/)
 [![Platforms](https://img.shields.io/badge/platform-Linux,_MacOS,_Windows-blue)]()
 [![PyPI version fury.io](https://badge.fury.io/py/flask-favicon.svg)](https://pypi.python.org/pypi/flask-favicon/)
 [![GitHub Workflow Status (with event)](https://github.com/maxdup/flask-favicon/actions/workflows/CI.yml/badge.svg)]()
-[![Coverage](https://github.com/maxdup/flask-favicon/blob/master/docs/source/coverage.svg "coverage")]()
+[![Coverage](https://github.com/maxdup/flask-favicon/blob/main/docs/source/coverage.svg "coverage")]()
 
 # Flask-favicon
 
