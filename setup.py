@@ -9,7 +9,8 @@ if 'VERSION_PLACEHOLDER' in VERSION:
 
 setup(
     name='flask-favicon',
-    packages=['flask_favicon'],
+    packages=['flask_favicon', 'flask_favicon.groups'],
+    include_package_data=True,
     version=VERSION,
     author='Maxime Dupuis',
     author_email='mdupuis@hotmail.ca',
