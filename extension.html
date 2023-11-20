@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html lang="English" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Extension reference &#8212; Flask-favicon 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script src="_static/documentation_options.js?v=76184ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="prev" title="Configuration Reference" href="configuration.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="extension-reference">
+<h1>Extension reference<a class="headerlink" href="#extension-reference" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="flask_favicon.FlaskFavicon">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">flask_favicon.</span></span><span class="sig-name descname"><span class="pre">FlaskFavicon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flask_favicon/flask_extension.html#FlaskFavicon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flask_favicon.FlaskFavicon" title="Link to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="flask_favicon.FlaskFavicon.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flask_favicon/flask_extension.html#FlaskFavicon.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flask_favicon.FlaskFavicon.__init__" title="Link to this definition">¶</a></dt>
+<dd><p>Constructor function for FlaskFavicon. It will call
+<a class="reference internal" href="#flask_favicon.FlaskFavicon.init_app" title="flask_favicon.FlaskFavicon.init_app"><code class="xref py py-func docutils literal notranslate"><span class="pre">FlaskFavicon.init_app()</span></code></a> automatically if the
+app parameter is provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>app</strong> (<a class="reference external" href="https://flask.palletsprojects.com/en/2.2.x/api/#flask.Flask" title="(in Flask v2.2.x)"><em>flask.Flask</em></a>) -- A Flask application.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_favicon.FlaskFavicon.init_app">
+<span class="sig-name descname"><span class="pre">init_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flask_favicon/flask_extension.html#FlaskFavicon.init_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flask_favicon.FlaskFavicon.init_app" title="Link to this definition">¶</a></dt>
+<dd><p>Initializes the extension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>app</strong> (<a class="reference external" href="https://flask.palletsprojects.com/en/2.2.x/api/#flask.Flask" title="(in Flask v2.2.x)"><em>flask.Flask</em></a>) -- A Flask application.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="flask_favicon.FlaskFavicon.register_favicon">
+<span class="sig-name descname"><span class="pre">register_favicon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">favicon_source_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">favicon_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theme_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flask_favicon/flask_extension.html#FlaskFavicon.register_favicon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flask_favicon.FlaskFavicon.register_favicon" title="Link to this definition">¶</a></dt>
+<dd><p>Registers an image to be used as a favicon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>favicon_source_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) -- A path to the image asset.</p></li>
+<li><p><strong>favicon_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) -- An identifier for the favicon.</p></li>
+<li><p><strong>background_color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) -- Hex formatted background color to be used for asset generation. It overrides <a class="reference internal" href="configuration.html#FAVICON_DEFAULT_BACKGROUND_COLOR" title="FAVICON_DEFAULT_BACKGROUND_COLOR"><code class="xref any py py-data docutils literal notranslate"><span class="pre">FAVICON_DEFAULT_BACKGROUND_COLOR</span></code></a> configuration.</p></li>
+<li><p><strong>theme_color</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) -- Hex formatted theme color to be used for asset generation. It overrides <a class="reference internal" href="configuration.html#FAVICON_DEFAULT_THEME_COLOR" title="FAVICON_DEFAULT_THEME_COLOR"><code class="xref any py py-data docutils literal notranslate"><span class="pre">FAVICON_DEFAULT_THEME_COLOR</span></code></a> configuration.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="flask_favicon.flask_integration.use_favicon">
+<span class="sig-prename descclassname"><span class="pre">flask_favicon.flask_integration.</span></span><span class="sig-name descname"><span class="pre">use_favicon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">favicon_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/flask_favicon/flask_integration.html#use_favicon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#flask_favicon.flask_integration.use_favicon" title="Link to this definition">¶</a></dt>
+<dd><p>Function decorator to override the default favicon on a specific route.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>favicon_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) -- The identifier of the favicon to be used.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/doc-logo.png" alt="Logo"/>
+            </a></p>
+<h1 class="logo"><a href="index.html">Flask-favicon</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="guides.html">User Guides</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="api_ref.html">Api Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="configuration.html">Configuration Reference</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Extension reference</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="api_ref.html">Api Reference</a><ul>
+      <li>Previous: <a href="configuration.html" title="previous chapter">Configuration Reference</a></li>
+      <li>Next: <a href="contributing.html" title="next chapter">Contributing</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Maxime Dupuis.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/extension.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
