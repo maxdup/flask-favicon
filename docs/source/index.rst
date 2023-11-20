@@ -18,8 +18,8 @@ Flask-favicon documentation
    :target: https://pypi.python.org/pypi/flask-favicon/
 
 .. CI Status
-.. image:: https://github.com/pySourceSDK/flask-favicon/actions/workflows/CI.yml/badge.svg
-   :target: https://github.com/pySourceSDK/flask-favicon/actions
+.. image:: https://github.com/maxdup/flask-favicon/actions/workflows/CI.yml/badge.svg
+   :target: https://github.com/maxdup/flask-favicon/actions
 
 .. Covarage
 .. image:: coverage.svg

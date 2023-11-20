@@ -56,7 +56,8 @@ CHECKSUM_FILENAME = 'checksum.txt'
 
 
 def _save_sum(checksum, favicon_dir):
-    checksum_path = os.path.normpath(os.path.join(favicon_dir, CHECKSUM_FILENAME))
+    checksum_path = os.path.normpath(
+        os.path.join(favicon_dir, CHECKSUM_FILENAME))
     with open(checksum_path, 'w') as f:
         f.write(checksum)
 
